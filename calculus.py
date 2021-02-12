@@ -1,38 +1,20 @@
 from sympy import *
-import matplotlib.pyplot as plt
-import numpy as np
+from sympy import symbols
+from sympy.plotting import plot
+from regex import *
 
-# x**3 + 2*x**2
-function = input()
-output = ''
-alf = 'abcdefghijklmnopqrstuvwxyz'
-ucircle_f = ['sin', 'cos', 'tan', 'csc', 'sec', 'cot']
-s = 40
+# 'x ** 3 * x + m + m ** 2'
+### TURNING INPUT INTO AN EQUATION
+init_term = input("Type your equation: ")
+init_term = f' {init_term} '
 
-def to_symbols(fnctn):
-    global output
-    for item in fnctn:
-        if item in alf:
-            if item in ucircle_f:
-                pass
-            else:
-                output += f"symbols('{item}')"
-        else:
-            output += item
-    return output
+line = findall('\s[a-z]\s', init_term)
+print(line)
+for item in line:
+    init_term = init_term.replace(item, f"symbol('{item}')")
+    line.remove(item)
+    
 
-output = to_symbols(function)
-
-print(diff(output))
-
-fig = plt.figure(figsize= (10, 10))
-
-x = np.linspace(-s, s, 10000)
-y = diff(output)
-
-plt.grid()
-plt.xlim(-s, s)
-plt.ylim(-s, s)
-plt.plot(x, y)
-
-plt.show()
+equation = init_term.replace(" ", "")
+print(equation)
+plot(equation)
