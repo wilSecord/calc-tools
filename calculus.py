@@ -68,24 +68,3 @@ for eq in f_eqs[1:]:
 
 # Shows all graphs
 p1.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
