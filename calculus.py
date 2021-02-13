@@ -1,48 +1,85 @@
 import sympy
 import regex
 
-# 'x ** 3 * x ** 2'
-
-### TURNING INPUT INTO AN EQUATION
-# Grabbing an input
-init_term = input("Type your equation: ")
-
-# Adds spaces to help parsing
-init_term = f' {init_term} '
-
 # Creates a list of trig functions
 functs = ['sin', 'cos', 'tan', 'csc', 'sec', 'cot']
 
-# Sets the size of the x axis in the grid
+# # Sets the size of the x axis in the grid
 size = 10
 
-# Searches and creates a list of all variables if typed in properly
-line = regex.findall('\s[a-z]\s', init_term)
+# Creates two empty lists. 'equations' and 'final equations' respectively
+eqs = []
+f_eqs = []
 
-# Removes duplicates in the list above
-line = list(dict.fromkeys(line))
+colors = ['r', 'b', 'g', 'y', 'p']
+color = 0
 
-# For loop to replace all variables with a sympy symbol for parsing
-for item in line:
-    init_term = init_term.replace(item, f" sympy.symbols('{item}') ")
+# Loops asking for an input until the word 'stop' is put in, regardless of capitals, or until 5 are input.
+for i in range(5):
+    init_term = input("Input function (this will continue until you type 'stop'): ")
+    if init_term.upper() == 'STOP':
+        break
+    else:
+        eqs.append(init_term)
 
-# For loop to check with the 'functs' list to replace trig functions with sympy trig functions for parsing
-for item in functs:
-    init_term = init_term.replace(item, f" sympy.{item}")
+
+for eq in eqs:
+
+    # Adds spaces to help parsing
+    eq = f' {eq} '
+
+    # Searches and creates a list of all variables if typed in properly
+    line = regex.findall('\s[a-z]\s', eq)
     
-# Removes spaces on the inside of the symbols and trig functions
-# i.e. sympy.symbols(' x ') -> sympy.symbols('x')
-equation = init_term.replace("' ", "'")
-equation = equation.replace(" '", "'")
+    # Removes duplicates in the list above
+    line = list(dict.fromkeys(line))
+    
+    # For loop to replace all variables with a sympy symbol for parsing
+    # i.e. 'x ** 2' -> 'sympy.symbols(' x ')'
+    for item in line:
+        eq = eq.replace(item, f" sympy.symbols('{item}') ")
+    
+    # For loop to check with the 'functs' list to replace trig functions with sympy trig functions for parsing
+    # i.e. 'sin( x ) ** 2' -> 'sympy.sin(' x ') ** 2'
+    for item in functs:
+        eq = eq.replace(item, f" sympy.{item}")
+        
+    # Removes spaces on the inside of the symbols and trig functions
+    # i.e. sympy.symbols(' x ') -> sympy.symbols('x')
+    equation = eq.replace("' ", "'")
+    equation = equation.replace(" '", "'")
+    
+    # Evaluates the string and turns it into an equation and appends that to the 'final equations' list
+    f_eqs.append(eval(equation))
 
-### PLOTTING
-# Creates the p1 variable as a plot function
-#               Turns the string into a parsable equation
-#                    |           
-#                    |           Sets the x plane size
-#                    |                           |
-#                    V                           V
-p1 = sympy.plot(eval(equation), (sympy.symbols('x'), -size, size))
+# Creates a variable named 'p1' and has it equal a graph of the first function in the 'final equations' list
+p1 = sympy.plot(f_eqs[0], (sympy.symbols('x'), -size, size), ylim=(-size, size), legend=True, show=False)
 
-# Runs the plot function
-p1
+# Appends the rest of the equations in the 'final equations' list to p1
+for eq in f_eqs[1:]:
+    p1.extend(sympy.plot(eq, (sympy.symbols('x'), -size, size), ylim=(-size, size), line_color=colors[color], show=False))
+    color += 1
+
+# Shows all graphs
+p1.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
