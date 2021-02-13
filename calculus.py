@@ -11,7 +11,10 @@ size = 10
 eqs = []
 f_eqs = []
 
-colors = ['r', 'b', 'g', 'y', 'p']
+# Creates a list of the color names used by the plotting function in sympy
+colors = ['r', 'b', 'g', 'y', 'c']
+
+# Creates an integer that will determine the color of each of the mathematical functions
 color = 0
 
 # Loops asking for an input until the word 'stop' is put in, regardless of capitals, or until 5 are input.
@@ -22,7 +25,7 @@ for i in range(5):
     else:
         eqs.append(init_term)
 
-
+# Loops for the amount of equations in the empty 'equations' list
 for eq in eqs:
 
     # Adds spaces to help parsing
@@ -53,11 +56,14 @@ for eq in eqs:
     f_eqs.append(eval(equation))
 
 # Creates a variable named 'p1' and has it equal a graph of the first function in the 'final equations' list
+# In order, selects the first equation in the 'final equations' list, determines the size of the x axis, creates the legend, makes it so it doesn't show yet
 p1 = sympy.plot(f_eqs[0], (sympy.symbols('x'), -size, size), ylim=(-size, size), legend=True, show=False)
 
 # Appends the rest of the equations in the 'final equations' list to p1
 for eq in f_eqs[1:]:
     p1.extend(sympy.plot(eq, (sympy.symbols('x'), -size, size), ylim=(-size, size), line_color=colors[color], show=False))
+    
+    # Increases the 'color' integer by 1 to change the color of the next mathematical function
     color += 1
 
 # Shows all graphs
