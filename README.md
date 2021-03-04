@@ -18,4 +18,7 @@
 * Added more comments
 * Allowed multiple functions to be graphed at the same time
 
-
+#### Thursday 3/4/21, 17:07
+* Added derivative support
+* Instructions are printed right at the start.
+* Outputs two graphs, derivatives and equations.
