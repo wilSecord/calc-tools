@@ -22,3 +22,7 @@
 * Added derivative support
 * Instructions are printed right at the start.
 * Outputs two graphs, derivatives and equations.
+
+##### TO-DO
+* Add support for ln and log functions
+* Bug fixes
