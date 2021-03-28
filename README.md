@@ -23,6 +23,10 @@
 * Instructions are printed right at the start.
 * Outputs two graphs, derivatives and equations.
 
+#### Saturday 3/27/21, 11:29
+* Made it easier for input recognition which now allows things like 'sin(x)' rather than 'sin( x )'
+* Recognize issue with input 'd/dx(sin(x)'
+
 ### TO-DO
 * Add support for ln and log functions
 * Bug fixes
