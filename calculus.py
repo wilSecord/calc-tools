@@ -1,8 +1,7 @@
 import sympy
 import re
-import logging as lg
+# import logging as lg
 
-lg.basicConfig(level=lg.DEBUG)
 
 functs = ['sin', 'cos', 'tan', 'csc', 'sec', 'cot']
 
@@ -32,8 +31,8 @@ def parse(equation):
             equation = equation.replace(item, f"sympy.{item}")
     
     equation = equation.replace(" ", "")
-    lg.debug(equation)
-    lg.debug(eval(equation))
+    # lg.debug(equation)
+    # lg.debug(eval(equation))
     
     return equation
 
@@ -67,7 +66,6 @@ for i in range(5):
         elif init_term.startswith('d/dx'):
             init_term = init_term.replace('d/dx', '')
             d_eqs.append(init_term)
-            print(init_term)
         else:
             eqs.append(init_term)
     
@@ -83,12 +81,8 @@ if len(f_eqs) > 0:
 if len(f_d_eqs) > 0:
     p2 = plot(f_d_eqs, "Derivatives")
     
-if f_eqs == []:
-    pass
-else:
-    p1.show()    
+if f_eqs != []:
+    p1.show()
 
-if f_d_eqs == []:
-    pass
-else:
+if f_d_eqs != []:
     p2.show()
