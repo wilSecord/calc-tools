@@ -36,6 +36,9 @@
 * Recognized issue with input ‘d/dx(sin(x)**cos(x))’ in which it returns a log function.
 * Fixed small amount of code towards the end
 
+#### Thursday, 4/15/21 16:39
+* Redesigned code
+
 ### TO-DO
 * Add support for ln and log functions
 * Bug fixes

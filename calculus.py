@@ -1,6 +1,6 @@
 import sympy
 import re
-# import logging as lg
+# from icecream import *
 
 
 functs = ['sin', 'cos', 'tan', 'csc', 'sec', 'cot']
@@ -16,48 +16,55 @@ colors = ['r', 'b', 'g', 'y', 'c']
 
 color = 0
 
-def parse(equation): 
+class Equation:
+    def __init__(self, eq):
+        self.eq = eq
     
-    equation = f' {equation} '
-    line = re.findall('\W[a-z]\W', equation)
-    line = list(dict.fromkeys(line))
-    
-    for item in line:
-        item = re.sub("\W", "", item)
-        equation = equation.replace(item, f"sympy.symbols('{item}')")
+    def parse(self):
+        equation = f' {self.eq} '
+        line = re.findall('\W[a-z]\W', equation)
+        line = list(dict.fromkeys(line))
         
-    for item in functs:
-        if item in equation:
-            equation = equation.replace(item, f"sympy.{item}")
+        for item in line:
+            item = re.sub('\W', '', item)
+            equation = equation.replace(item, f"sympy.symbols('{item}')")
+        
+        for item in functs:
+            if item in equation:
+                equation = equation.replace(item, f'sympy.{item}')
+        
+        equation = equation.replace(' ', '')
+        
+        return equation
     
-    equation = equation.replace(" ", "")
-    # lg.debug(equation)
-    # lg.debug(eval(equation))
-    
-    return equation
-
-def plot(lst, plt_title):
-    
-    global color
-    for eq in lst:
-        eq = eq.replace("**", "^")
-    
-    plt = sympy.plot(eval(str(lst[0])),
+class Plot:
+    def __init__(self, lst, plt_title):
+        self.lst = lst
+        self.plt_title = plt_title
+        
+    def plot(self):
+        
+        global color
+        for eq in self.lst:
+            eq = eq.replace('**', '^')
+        
+        plt = sympy.plot(eval(str(self.lst[0])),
                      (sympy.symbols('x'), -size, size),
                      ylim=(-size, size),
                      legend=True, show=False,
-                     title=plt_title)
+                     title=self.plt_title)
     
-    for eq in lst[1:]:
-        plt.extend(sympy.plot(eval(str(eq)),
-                              (sympy.symbols('x'), -size, size),
-                              ylim=(-size, size),
-                              line_color=colors[color],
-                              show=False))
-        color += 1
-    return plt
+        for eq in self.lst[1:]:
+            plt.extend(sympy.plot(eval(str(eq)),
+                                  (sympy.symbols('x'), -size, size),
+                                  ylim=(-size, size),
+                                  line_color=colors[color],
+                                  show=False))
+            color += 1
+        return plt
 
-for i in range(5):
+if __name__ == '__main__':
+    for i in range(5):
         
         init_term = input("Input function (this will continue until you type 'stop'): ")
         
@@ -68,21 +75,23 @@ for i in range(5):
             d_eqs.append(init_term)
         else:
             eqs.append(init_term)
+            
+    for eq in eqs:
+        _eq = eval(str(Equation(eq).parse()))
+        f_eqs.append(Equation(_eq).parse())
+        
+    for eq in d_eqs:
+        _d_eq = sympy.diff(eval(str(Equation(eq).parse())))
+        f_d_eqs.append(Equation(_d_eq).parse())
     
-for eq in eqs:
-    f_eqs.append(parse(eval(str(parse(eq)))))
+    if len(f_eqs) > 0:
+        p1 = Plot(f_eqs, 'Equations').plot()
 
-for eq in d_eqs:
-    f_d_eqs.append(parse(sympy.diff(eval(str(parse(eq))))))
-
-if len(f_eqs) > 0:
-    p1 = plot(f_eqs, "Equations")
-
-if len(f_d_eqs) > 0:
-    p2 = plot(f_d_eqs, "Derivatives")
+    if len(f_d_eqs) > 0:
+        p2 = Plot(f_d_eqs, 'Derivatives').plot()
+        
+    if f_eqs != []:
+        p1.show()
     
-if f_eqs != []:
-    p1.show()
-
-if f_d_eqs != []:
-    p2.show()
+    if f_d_eqs != []:
+        p2.show()
