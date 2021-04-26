@@ -40,5 +40,4 @@
 * Redesigned code
 
 ### TO-DO
-* Add support for ln and log functions
-* Bug fixes
+* Bug fixing and polishing
