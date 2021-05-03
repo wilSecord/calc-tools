@@ -1,7 +1,5 @@
 import sympy
 import re
-# from icecream import *
-
 
 functs = ['sin', 'cos', 'tan', 'csc', 'sec', 'cot']
 
@@ -72,18 +70,10 @@ if __name__ == '__main__':
             break
         elif init_term.startswith('d/dx'):
             init_term = init_term.replace('d/dx', '')
-            d_eqs.append(init_term)
+            f_d_eqs.append(sympy.diff(eval(str(Equation(init_term).parse()))))
         else:
-            eqs.append(init_term)
-            
-    for eq in eqs:
-        _eq = eval(str(Equation(eq).parse()))
-        f_eqs.append(Equation(_eq).parse())
+            f_eqs.append(eval(str(Equation(init_term).parse())))
         
-    for eq in d_eqs:
-        _d_eq = sympy.diff(eval(str(Equation(eq).parse())))
-        f_d_eqs.append(Equation(_d_eq).parse())
-    
     if len(f_eqs) > 0:
         p1 = Plot(f_eqs, 'Equations').plot()
 
