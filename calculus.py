@@ -32,8 +32,9 @@ class Equation:
                 equation = equation.replace(item, f'sympy.{item}')
         
         equation = equation.replace(' ', '')
-        
+        equation = str(equation)
         return equation
+         
     
 class Plot:
     def __init__(self, lst, plt_title):
@@ -43,21 +44,26 @@ class Plot:
     def plot(self):
         
         global color
-        for eq in self.lst:
-            eq = eq.replace('**', '^')
+        # for eq in self.lst:
+        #     print(eq)      
         
-        plt = sympy.plot(eval(str(self.lst[0])),
+        print(self.lst[0])
+        plt = sympy.plotting.plot(eval(str(self.lst[0])),
                      (sympy.symbols('x'), -size, size),
                      ylim=(-size, size),
                      legend=True, show=False,
                      title=self.plt_title)
     
         for eq in self.lst[1:]:
-            plt.extend(sympy.plot(eval(str(eq)),
-                                  (sympy.symbols('x'), -size, size),
-                                  ylim=(-size, size),
-                                  line_color=colors[color],
-                                  show=False))
+            print(eq)
+            plt2 = sympy.plotting.plot(eval(str(eq)),
+                        (sympy.symbols('x'), -size, size), 
+                        ylim=(-size, size),
+                        line_color=colors[color],
+                        show=False)
+            
+            plt.extend(plt2)
+            
             color += 1
         return plt
 
@@ -72,7 +78,7 @@ if __name__ == '__main__':
             init_term = init_term.replace('d/dx', '')
             f_d_eqs.append(sympy.diff(eval(str(Equation(init_term).parse()))))
         else:
-            f_eqs.append(eval(str(Equation(init_term).parse())))
+            f_eqs.append(str(Equation(init_term).parse()))
         
     if len(f_eqs) > 0:
         p1 = Plot(f_eqs, 'Equations').plot()
