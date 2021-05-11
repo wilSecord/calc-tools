@@ -76,7 +76,7 @@ if __name__ == '__main__':
             break
         elif init_term.startswith('d/dx'):
             init_term = init_term.replace('d/dx', '')
-            f_d_eqs.append(sympy.diff(eval(str(Equation(init_term).parse()))))
+            f_d_eqs.append(Equation(sympy.diff(eval(str(Equation(init_term).parse())))).parse())
         else:
             f_eqs.append(str(Equation(init_term).parse()))
         
