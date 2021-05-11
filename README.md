@@ -39,5 +39,10 @@
 #### Thursday, 4/15/21 16:39
 * Redesigned code
 
+#### Tuesday, 5/11/21 10:55
+* Found and fixed issues with derivatives. 
+* Was: Parsed eq -> took derivative
+* Is: Parsed eq -> took derivative -> parsed derivative.
+
 ### TO-DO
 * Bug fixing and polishing
