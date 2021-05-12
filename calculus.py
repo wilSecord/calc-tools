@@ -14,6 +14,7 @@ colors = ['r', 'b', 'g', 'y', 'c']
 
 color = 0
 
+
 class Equation:
     def __init__(self, eq):
         self.eq = eq
@@ -66,6 +67,7 @@ class Plot:
             
             color += 1
         return plt
+
 
 if __name__ == '__main__':
     for i in range(5):
