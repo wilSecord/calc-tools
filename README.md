@@ -20,8 +20,8 @@
 
 #### Thursday 3/4/21, 17:07
 * Added derivative support
-* Instructions are printed right at the start.
-* Outputs two graphs, derivatives and equations.
+* Instructions are printed right at the start
+* Outputs two graphs, derivatives and equations
 
 #### Saturday 3/27/21, 23:29
 * Made it easier for input recognition which now allows things like 'sin(x)' rather than 'sin( x )'
@@ -33,16 +33,20 @@
 * Fixed input issue and input works well
 
 #### Monday, 3/29/21 12:05
-* Recognized issue with input ‘d/dx(sin(x)**cos(x))’ in which it returns a log function.
+* Recognized issue with input ‘d/dx(sin(x)**cos(x))’ in which it returns a log function
 * Fixed small amount of code towards the end
 
 #### Thursday, 4/15/21 16:39
 * Redesigned code
 
 #### Tuesday, 5/11/21 10:55
-* Found and fixed issues with derivatives. 
+* Found and fixed issues with derivatives.
 * Was: Parsed eq -> took derivative
-* Is: Parsed eq -> took derivative -> parsed derivative.
+* Is: Parsed eq -> took derivative -> parsed derivative
+
+#### Sunday, 5/16/21 22:01
+* Updated to better hand the input stage
+* Renamed main file to better portray use
 
 ### TO-DO
 * Bug fixing and polishing

@@ -13,7 +13,7 @@ f_eqs = []
 colors = ['r', 'b', 'g', 'y', 'c']
 
 color = 0
-
+calls = 5
 
 class Equation:
     def __init__(self, eq):
@@ -45,8 +45,6 @@ class Plot:
     def plot(self):
         
         global color
-        # for eq in self.lst:
-        #     print(eq)      
         
         print(self.lst[0])
         plt = sympy.plotting.plot(eval(str(self.lst[0])),
@@ -70,7 +68,8 @@ class Plot:
 
 
 if __name__ == '__main__':
-    for i in range(5):
+    while calls > 0:
+        print(calls)
         
         init_term = input("Input function (this will continue until you type 'stop'): ")
         
@@ -78,18 +77,21 @@ if __name__ == '__main__':
             break
         elif init_term.startswith('d/dx'):
             init_term = init_term.replace('d/dx', '')
-            f_d_eqs.append(Equation(sympy.diff(eval(str(Equation(init_term).parse())))).parse())
+            try:
+                f_eqs.append(Equation(sympy.diff(eval(str(Equation(init_term).parse())))).parse())
+                calls -= 1
+            except:
+                print("Invalid Syntax")
         else:
-            f_eqs.append(str(Equation(init_term).parse()))
+            try:
+                f_eqs.append(Equation(str(eval(str(Equation(init_term).parse())))).parse())
+                calls -= 1
+            except:
+                print("Invalid Syntax")
         
     if len(f_eqs) > 0:
         p1 = Plot(f_eqs, 'Equations').plot()
 
-    if len(f_d_eqs) > 0:
-        p2 = Plot(f_d_eqs, 'Derivatives').plot()
         
     if f_eqs != []:
         p1.show()
-    
-    if f_d_eqs != []:
-        p2.show()
