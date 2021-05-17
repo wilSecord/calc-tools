@@ -13,7 +13,7 @@ f_eqs = []
 colors = ['r', 'b', 'g', 'y', 'c']
 
 color = 0
-calls = 5
+calls = 1
 
 class Equation:
     def __init__(self, eq):
@@ -45,8 +45,7 @@ class Plot:
     def plot(self):
         
         global color
-        
-        print(self.lst[0])
+
         plt = sympy.plotting.plot(eval(str(self.lst[0])),
                      (sympy.symbols('x'), -size, size),
                      ylim=(-size, size),
@@ -54,7 +53,6 @@ class Plot:
                      title=self.plt_title)
     
         for eq in self.lst[1:]:
-            print(eq)
             plt2 = sympy.plotting.plot(eval(str(eq)),
                         (sympy.symbols('x'), -size, size), 
                         ylim=(-size, size),
@@ -68,10 +66,8 @@ class Plot:
 
 
 if __name__ == '__main__':
-    while calls > 0:
-        print(calls)
-        
-        init_term = input("Input function (this will continue until you type 'stop'): ")
+    while calls != 6:
+        init_term = input(f"Input function #{calls} (this will continue until you type 'stop'): ")
         
         if init_term.upper() == 'STOP':
             break
@@ -79,13 +75,13 @@ if __name__ == '__main__':
             init_term = init_term.replace('d/dx', '')
             try:
                 f_eqs.append(Equation(sympy.diff(eval(str(Equation(init_term).parse())))).parse())
-                calls -= 1
+                calls += 1
             except:
                 print("Invalid Syntax")
         else:
             try:
                 f_eqs.append(Equation(str(eval(str(Equation(init_term).parse())))).parse())
-                calls -= 1
+                calls += 1
             except:
                 print("Invalid Syntax")
         
